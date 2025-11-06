@@ -10,12 +10,14 @@
       font-family: sans-serif;
       background-color: #f0f8ff;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     canvas {
-      display: block;
-      margin: auto;
       background-color: #fff;
       border: 3px solid #8b4513;
+      margin-top: 20px;
     }
     #startScreen {
       position: absolute;
@@ -42,8 +44,8 @@
     }
     #controls {
       position: absolute;
-      bottom: 10px;
-      left: 10px;
+      top: 100px;
+      right: 10px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -65,23 +67,24 @@
       display: flex;
       gap: 5px;
       justify-content: center;
+      margin-top: 10px;
     }
     #bullymeterContainer {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 60px;
-      height: 160px;
+      position: relative;
+      margin: 20px auto 0 auto;
+      width: 160px;
+      height: 100px;
       border: 2px solid #8b0000;
       background-color: rgba(255,255,255,0.2);
       border-radius: 10px;
       overflow: hidden;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
     #bullymeterCount {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: bold;
       color: #fff;
       background-color: #8b0000;
@@ -92,9 +95,10 @@
     #bullymeterFill {
       flex-grow: 1;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
       padding: 5px;
     }
     #bullyName {
@@ -148,7 +152,10 @@
 </div>
 
 <div id="bullymeterContainer">
-  <div id="bullymeterCount">0</div>
+  <div id="bullymeterCount">
+    <div>Canicas: <span id="canicasContador">0</span></div>
+    <div>Tiempo: <span id="timer">03:00</span></div>
+  </div>
   <div id="bullymeterFill"></div>
 </div>
 
@@ -167,7 +174,6 @@ let canicas = [];
 let obstacles = [];
 let score = 0;
 let gameOver = false;
-let blink = true;
 let hue = 0;
 let bullyNames = ["Bully-blast", "Bully-word", "Bully-byte", "Bullyshade", "Bully-fear", "Bullymaster"];
 let bullyNameDiv = document.getElementById("bullyName");
@@ -175,13 +181,22 @@ let gameSpeed = 150;
 let timer = 180;
 let bullymeterCount = 0;
 
+function updateTimerDisplay() {
+  const minutes = Math.floor(timer / 60);
+  const seconds = timer % 60;
+  document.getElementById("timer").textContent =
+    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
 function startGame() {
   document.getElementById("startScreen").style.display = "none";
   document.getElementById("backgroundMusic").play();
   resetGame();
   gameLoop();
+  updateTimerDisplay();
   setInterval(() => {
     timer--;
+    updateTimerDisplay();
     if (timer <= 0) {
       alert("⏳ ¡Tiempo terminado!");
       resetGame();
@@ -235,16 +250,18 @@ function resetGame() {
   direction = {x: 0, y: 0};
   score = 0;
   bullymeterCount = 0;
-  document.getElementById("bullymeterCount").textContent = "0";
+  document.getElementById("canicasContador").textContent = "0";
   document.getElementById("bullymeterFill").innerHTML = "";
   spawnCanicas();
   spawnObstacles();
   gameOver = false;
+  timer = 180;
+  updateTimerDisplay();
 }
 
 function agregarCanicaAlBullymetro() {
   const fill = document.getElementById("bullymeterFill");
-  const count = document.getElementById("bullymeterCount");
+  const count = document.getElementById("canicasContador");
 
   const canica = document.createElement("div");
   canica.style.width = "20px";
@@ -268,12 +285,10 @@ function agregarCanicaAlBullymetro() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Capibara
   let img = new Image();
   img.src = "capibara_sprite.png";
   ctx.drawImage(img, capibara[0].x, capibara[0].y, 20, 20);
 
-  // Canicas
   hue += 5;
   canicas.forEach(c => {
     ctx.fillStyle = `hsl(${hue % 360}, 100%, 50%)`;
@@ -282,7 +297,6 @@ function draw() {
     ctx.fill();
   });
 
-  // Obstáculos
   obstacles.forEach((o, i) => {
     let bullyImg = new Image();
     bullyImg.src = o.sprite;
@@ -329,10 +343,6 @@ function update() {
 
   capibara.unshift(head);
   capibara.pop();
-
-  if (score >= 6) {
-    // Victory logic already handled via Bullymetro
-  }
 }
 
 function moveObstacles() {
@@ -350,6 +360,13 @@ function gameLoop() {
   moveObstacles();
   setTimeout(gameLoop, gameSpeed);
 }
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "ArrowUp") setDirection(0, -1);
+  if (e.key === "ArrowDown") setDirection(0, 1);
+  if (e.key === "ArrowLeft") setDirection(-1, 0);
+  if (e.key === "ArrowRight") setDirection(1, 0);
+});
 </script>
 </body>
 </html>
