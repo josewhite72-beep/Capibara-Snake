@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brigada Capibara</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 0;
+    }
+    nav {
+      margin: 20px 0;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    img {
+      max-width: 90%;
+      height: auto;
+      margin-top: 20px;
+    }
+    section {
+      margin: 40px 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Brigada Capibara</h1>
+    <p>Educación contra el bullying con valentía y compasión</p>
+  </header>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#juego">Juego SnakeCapibara</a>
+    <a href="#presentacion">Presentación</a>
+    <a href="#guia">Guía Docente</a>
+  </nav>
+
+  <img src="brigada_capibara.png" alt="Brigada Capibara">
+
+  <section id="inicio">
+    <h2>Inicio</h2>
+    <p>Bienvenido al proyecto Brigada Capibara. Aquí encontrarás recursos educativos para trabajar el bullying en el aula.</p>
+  </section>
+
+  <section id="juego">
+    <h2>Juego SnakeCapibara</h2>
+    <p>Descubre el juego educativo donde Capibara recoge canicas y enfrenta a los Bullys. ¡Juega y aprende!</p>
+  </section>
+
+  <section id="presentacion">
+    <h2>Presentación</h2>
+    <p>Explora la presentación ilustrada de la Brigada Capibara en acción. Ideal para actos escolares y actividades en clase.</p>
+  </section>
+
+  <section id="guia">
+    <h2>Guía Docente</h2>
+    <p>Accede a la guía de actividades complementarias para trabajar el bullying con tus estudiantes.</p>
+  </section>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker registrado', reg))
+        .catch(err => console.error('Error al registrar Service Worker', err));
+    }
+  </script>
+</body>
+</html>
