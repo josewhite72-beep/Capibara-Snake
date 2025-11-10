@@ -418,6 +418,10 @@
         .then(reg => console.log('Service Worker registrado', reg))
         .catch(err => console.error('Error al registrar Service Worker', err));
     }
+    window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
   </script>
 </body>
 </html>
