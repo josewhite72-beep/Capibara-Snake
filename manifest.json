@@ -1,8 +1,9 @@
- {
+{
   "name": "Capibara Snake",
   "short_name": "CapiSnake",
-  "description": "Capibara Snake es un juego educativo tipo Snake donde controlas una capibara para recolectar canicas en el Bullymetro y evitar Bullys. Diseñado para promover valores contra el bullying mientras te diviertes.",
+  "description": "Capibara Snake es un juego educativo tipo Snake donde controlas una capibara para recolectar canicas y enfrentar Bullys. Promueve valores contra el bullying mientras te diviertes.",
   "lang": "es",
+  "dir": "ltr",
   "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
